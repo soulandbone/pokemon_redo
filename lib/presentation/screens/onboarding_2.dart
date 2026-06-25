@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pokemon_redo/constants/app_colors.dart';
 import 'package:pokemon_redo/constants/app_strings.dart';
 import 'package:pokemon_redo/presentation/screens/home_page.dart';
-import 'package:pokemon_redo/presentation/screens/widgets/dot_line_indicator.dart';
+import 'package:pokemon_redo/presentation/widgets/dot_line_indicator.dart';
 
 class OnBoarding2 extends StatelessWidget {
   const OnBoarding2({super.key});
