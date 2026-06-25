@@ -1,28 +1,30 @@
-import 'dart:convert';
-
 import 'package:pokemon_redo/data/network/app_http_client.dart';
 
-class BasicPokemonApiClient {
-  BasicPokemonApiClient(this.client);
-  final AppHttpClient client;
+abstract class BasicPokemonApiClient {
+  BasicPokemonApiClient(this.appHttpClient);
 
-  Future<List<Map<String, dynamic>>> fetchBasicPokemons({
+  final AppHttpClient appHttpClient;
+
+  Future<HttpResponse<String>> fetchBasicPokemonData({
+    required int offset,
+    required int limit,
+  });
+}
+
+class BasicPokemonApiClientImpl implements BasicPokemonApiClient {
+  const BasicPokemonApiClientImpl(this.appHttpClient);
+  @override
+  final AppHttpClient appHttpClient;
+
+  @override
+  Future<HttpResponse<String>> fetchBasicPokemonData({
     required int offset,
     required int limit,
   }) async {
-    final uri = Uri(
-      path: 'https://pokeapi.co/api/v2/pokemon?offset=$offset&limit=$limit',
+    final uri = Uri.parse(
+      'https://pokeapi.co/api/v2/pokemon?offset=$offset&limit=$limit',
     );
 
-    final response = await client.getRaw(uri);
-    //was set to 1328
-    final results = response.body;
-
-    final json = jsonDecode(results);
-
-    //CHECK
-    return List<Map<String, dynamic>>.from(
-      json.map((item) => Map<String, dynamic>.from(item)),
-    );
+    return appHttpClient.getRaw(uri);
   }
 }
