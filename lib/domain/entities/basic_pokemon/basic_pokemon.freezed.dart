@@ -12,7 +12,8 @@ part of 'basic_pokemon.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 BasicPokemon _$BasicPokemonFromJson(Map<String, dynamic> json) {
   return _BasicPokemon.fromJson(json);
@@ -24,8 +25,12 @@ mixin _$BasicPokemon {
   String get name => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
 
+  /// Serializes this BasicPokemon to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of BasicPokemon
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BasicPokemonCopyWith<BasicPokemon> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -33,8 +38,9 @@ mixin _$BasicPokemon {
 /// @nodoc
 abstract class $BasicPokemonCopyWith<$Res> {
   factory $BasicPokemonCopyWith(
-          BasicPokemon value, $Res Function(BasicPokemon) then) =
-      _$BasicPokemonCopyWithImpl<$Res, BasicPokemon>;
+    BasicPokemon value,
+    $Res Function(BasicPokemon) then,
+  ) = _$BasicPokemonCopyWithImpl<$Res, BasicPokemon>;
   @useResult
   $Res call({int id, String name, String url});
 }
@@ -49,27 +55,28 @@ class _$BasicPokemonCopyWithImpl<$Res, $Val extends BasicPokemon>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BasicPokemon
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? url = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  $Res call({Object? id = null, Object? name = null, Object? url = null}) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as int,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            url: null == url
+                ? _value.url
+                : url // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -77,8 +84,9 @@ class _$BasicPokemonCopyWithImpl<$Res, $Val extends BasicPokemon>
 abstract class _$$BasicPokemonImplCopyWith<$Res>
     implements $BasicPokemonCopyWith<$Res> {
   factory _$$BasicPokemonImplCopyWith(
-          _$BasicPokemonImpl value, $Res Function(_$BasicPokemonImpl) then) =
-      __$$BasicPokemonImplCopyWithImpl<$Res>;
+    _$BasicPokemonImpl value,
+    $Res Function(_$BasicPokemonImpl) then,
+  ) = __$$BasicPokemonImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String name, String url});
@@ -89,38 +97,42 @@ class __$$BasicPokemonImplCopyWithImpl<$Res>
     extends _$BasicPokemonCopyWithImpl<$Res, _$BasicPokemonImpl>
     implements _$$BasicPokemonImplCopyWith<$Res> {
   __$$BasicPokemonImplCopyWithImpl(
-      _$BasicPokemonImpl _value, $Res Function(_$BasicPokemonImpl) _then)
-      : super(_value, _then);
+    _$BasicPokemonImpl _value,
+    $Res Function(_$BasicPokemonImpl) _then,
+  ) : super(_value, _then);
 
+  /// Create a copy of BasicPokemon
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? url = null,
-  }) {
-    return _then(_$BasicPokemonImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? id = null, Object? name = null, Object? url = null}) {
+    return _then(
+      _$BasicPokemonImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as int,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        url: null == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$BasicPokemonImpl implements _BasicPokemon {
-  const _$BasicPokemonImpl(
-      {required this.id, required this.name, required this.url});
+  const _$BasicPokemonImpl({
+    required this.id,
+    required this.name,
+    required this.url,
+  });
 
   factory _$BasicPokemonImpl.fromJson(Map<String, dynamic> json) =>
       _$$BasicPokemonImplFromJson(json);
@@ -147,11 +159,13 @@ class _$BasicPokemonImpl implements _BasicPokemon {
             (identical(other.url, url) || other.url == url));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, url);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BasicPokemon
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BasicPokemonImplCopyWith<_$BasicPokemonImpl> get copyWith =>
@@ -159,17 +173,16 @@ class _$BasicPokemonImpl implements _BasicPokemon {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$BasicPokemonImplToJson(
-      this,
-    );
+    return _$$BasicPokemonImplToJson(this);
   }
 }
 
 abstract class _BasicPokemon implements BasicPokemon {
-  const factory _BasicPokemon(
-      {required final int id,
-      required final String name,
-      required final String url}) = _$BasicPokemonImpl;
+  const factory _BasicPokemon({
+    required final int id,
+    required final String name,
+    required final String url,
+  }) = _$BasicPokemonImpl;
 
   factory _BasicPokemon.fromJson(Map<String, dynamic> json) =
       _$BasicPokemonImpl.fromJson;
@@ -180,8 +193,11 @@ abstract class _BasicPokemon implements BasicPokemon {
   String get name;
   @override
   String get url;
+
+  /// Create a copy of BasicPokemon
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BasicPokemonImplCopyWith<_$BasicPokemonImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
