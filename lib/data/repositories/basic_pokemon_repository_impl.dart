@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:pokemon_redo/data/datasources/basic_pokemon_api_client.dart';
@@ -11,18 +12,26 @@ class BasicPokemonRepositoryImpl implements BasicPokemonRepository {
 
   @override
   Future<List<BasicPokemon>> fetchBasicPokemons(int offset, int limit) async {
-    //List<BasicPokemon>
-    final response = await basicPokemonApiClient.fetchBasicPokemonData(
-      offset: offset,
-      limit: limit,
-    );
-    final data = response.body;
-    final decodedJson = jsonDecode(data) as Map<String, dynamic>;
+    print("The repository implementation is working");
 
-    final results = decodedJson['results'];
+    List results = [];
+    try {
+      final response = await basicPokemonApiClient.fetchBasicPokemonData(
+        offset: offset,
+        limit: limit,
+      );
 
-    print("results are $results");
+      final data = response.body;
+      final decodedJson = jsonDecode(data) as Map<String, dynamic>;
 
-    return [BasicPokemon(id: 1, name: "Test", url: "test")];
+      results = decodedJson['results'] as List<dynamic>;
+    } catch (e) {
+      print(e.toString());
+    }
+
+    return results.map((e) {
+      final element = e as Map<String, dynamic>;
+      return BasicPokemon.fromJson(element);
+    }).toList();
   }
 }

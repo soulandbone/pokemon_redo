@@ -1,18 +1,17 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class BasicPokemon {
+  BasicPokemon({required this.id, required this.name, required this.url});
 
-part 'basic_pokemon.freezed.dart';
-part 'basic_pokemon.g.dart';
+  final int id;
+  final String name;
+  final String url;
 
-@freezed
-class BasicPokemon with _$BasicPokemon {
-  const factory BasicPokemon({
-    required int id,
-    required String name,
-    required String url,
-  }) = _BasicPokemon;
+  factory BasicPokemon.fromJson(Map<String, dynamic> json) {
+    final id = extractIdFromUrl(json['url']);
+    final name = json['name'];
+    final url = json['url'];
 
-  factory BasicPokemon.fromJson(Map<String, dynamic> json) =>
-      _$BasicPokemonFromJson(json);
+    return BasicPokemon(id: id, name: name, url: url);
+  }
 }
 
 int extractIdFromUrl(String url) {
