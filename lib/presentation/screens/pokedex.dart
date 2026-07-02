@@ -13,11 +13,12 @@ class Pokedex extends ConsumerStatefulWidget {
 class _PokedexState extends ConsumerState<Pokedex> {
   @override
   void initState() {
-    print("This is the initState method");
     super.initState();
-    ref
-        .read(basicPokemonListNotifierProvider.notifier)
-        .loadBasicPokemons(0, 20);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ref
+          .read(basicPokemonListNotifierProvider.notifier)
+          .loadBasicPokemons(0, 20),
+    );
   }
 
   @override
@@ -46,46 +47,48 @@ class _PokedexState extends ConsumerState<Pokedex> {
           //   ),
           // ],
         ),
-        body: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: Row(
+        body: state.isLoading
+            ? Center(child: CircularProgressIndicator())
+            : Column(
                 children: [
-                  // Expanded(
-                  //     child: SearchBoxPokemon(
-                  //   controller: _textController,
-                  // )),
-                  SizedBox(width: 30),
-                  // InkWell(
-                  //   onTap: () {
-                  //     // clearSearchBox();
-                  //   }, // This is to clear what is in the controller
-                  //   child: Container(
-                  //     decoration: BoxDecoration(
-                  //       shape: BoxShape.circle,
-                  //       border: Border.all(color: Colors.grey, width: 1),
-                  //     ),
-                  //     child: CircleAvatar(
-                  //       backgroundColor: Colors.white,
-                  //       child: Icon(Icons.clear),
-                  //     ),
-                  //   ),
-                  // ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    child: Row(
+                      children: [
+                        // Expanded(
+                        //     child: SearchBoxPokemon(
+                        //   controller: _textController,
+                        // )),
+                        SizedBox(width: 30),
+                        // InkWell(
+                        //   onTap: () {
+                        //     // clearSearchBox();
+                        //   }, // This is to clear what is in the controller
+                        //   child: Container(
+                        //     decoration: BoxDecoration(
+                        //       shape: BoxShape.circle,
+                        //       border: Border.all(color: Colors.grey, width: 1),
+                        //     ),
+                        //     child: CircleAvatar(
+                        //       backgroundColor: Colors.white,
+                        //       child: Icon(Icons.clear),
+                        //     ),
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                  ),
+
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: pokemons.length,
+                      itemBuilder: (_, index) {
+                        return PokemonTile(pokemon: pokemons[index]);
+                      },
+                    ),
+                  ),
                 ],
               ),
-            ),
-
-            Expanded(
-              child: ListView.builder(
-                itemCount: pokemons.length,
-                itemBuilder: (_, index) {
-                  return PokemonTile(pokemon: pokemons[index]);
-                },
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
