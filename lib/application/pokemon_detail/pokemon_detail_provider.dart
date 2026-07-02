@@ -6,5 +6,7 @@ final pokemonDetailProvider = FutureProvider.autoDispose
     .family<PokemonDetails, String>((ref, String url) async {
       final repository = ref.read(pokemonRepositoryProvider);
 
+      ref.keepAlive();
+
       return repository.fetchPokemonDetails(url);
     });

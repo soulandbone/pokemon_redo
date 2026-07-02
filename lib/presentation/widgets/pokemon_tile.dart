@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon_redo/application/pokemon_detail/pokemon_detail_provider.dart';
 import 'package:pokemon_redo/constants/app_colors.dart';
+import 'package:pokemon_redo/constants/app_maps.dart';
 import 'package:pokemon_redo/domain/entities/basic_pokemon/basic_pokemon.dart';
 import 'package:pokemon_redo/domain/entities/pokemon_details/pokemon_details.dart';
 import 'package:pokemon_redo/helpers/capitalizer.dart';
 import 'package:pokemon_redo/helpers/number_formatter.dart';
 import 'package:pokemon_redo/helpers/string_to_icon_mapper.dart';
+import 'package:pokemon_redo/presentation/widgets/image_gradient.dart';
 
 class PokemonTile extends ConsumerWidget {
   const PokemonTile({required this.pokemon, super.key});
@@ -35,7 +37,7 @@ Widget _fullPokemonTile(PokemonDetails details, BasicPokemon pokemon) {
     },
     child: Container(
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: AppMaps.typeTransparentColorMap[details.types[0]],
         borderRadius: BorderRadius.circular(12),
       ),
       margin: EdgeInsets.only(bottom: 10, left: 20, right: 20),
@@ -89,25 +91,27 @@ Widget _fullPokemonTile(PokemonDetails details, BasicPokemon pokemon) {
             flex: 2,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.orange, //AppMaps.typeColorMap[pokemon.types[0]],
+                color: AppMaps.typeColorMap[details.types[0]],
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Stack(
                 children: [
-                  // Center(
-                  //   child: ImageGradient(
-                  //     AppMaps.imageStringUrl[pokemon.types[0]]!,
-                  //   ),
-                  // ), //AppMaps.typeIconMapLarge[pokemon.types[0]]!
-                  // Center(
-                  //     child: Image.network(
-                  //   pokemon.spriteUrl,
-                  //   errorBuilder: (context, error, stackTrace) {
-                  //     return Opacity(
-                  //         opacity: 0.2,
-                  //         child: Image.asset('assets/poke_ball_icon.png'));
-                  //   },
-                  // )),
+                  Center(
+                    child: ImageGradient(
+                      AppMaps.imageStringUrl[details.types[0]]!,
+                    ),
+                  ), //AppMaps.typeIconMapLarge[pokemon.types[0]]!
+                  Center(
+                    child: Image.network(
+                      details.frontDefault,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Opacity(
+                          opacity: 0.2,
+                          child: Image.asset('assets/poke_ball_icon.png'),
+                        );
+                      },
+                    ),
+                  ),
                   Positioned(
                     right: 8,
                     top: 10,
