@@ -10,9 +10,13 @@ final pokemonRepositoryProvider = Provider<PokemonRepository>((ref) {
   final pokemonDetailsApiClientInstance = ref.read(
     pokemonDetailsApiClientProvider,
   );
+  final pokemonSpeciesApiClientInstance = ref.read(
+    pokemonSpeciesApiClientProvider,
+  );
 
   return PokemonRepositoryImpl(
     basicPokemonApiClient: basicPokemonApiClientInstance,
     pokemonDetailsApiClient: pokemonDetailsApiClientInstance,
+    pokemonSpeciesApiClient: pokemonSpeciesApiClientInstance,
   );
 });

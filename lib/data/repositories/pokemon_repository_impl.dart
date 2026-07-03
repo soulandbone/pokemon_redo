@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:pokemon_redo/data/datasources/basic_pokemon_api_client.dart';
 import 'package:pokemon_redo/data/datasources/pokemon_details_api_client.dart';
+import 'package:pokemon_redo/data/datasources/pokemon_species_api_client.dart';
 import 'package:pokemon_redo/domain/entities/pokemon_details/pokemon_details.dart';
+import 'package:pokemon_redo/domain/entities/pokemon_species/pokemon_species.dart';
 import 'package:pokemon_redo/domain/pokemon_repository.dart';
 import 'package:pokemon_redo/domain/entities/basic_pokemon/basic_pokemon.dart';
 
@@ -11,13 +13,15 @@ class PokemonRepositoryImpl implements PokemonRepository {
   PokemonRepositoryImpl({
     required this.basicPokemonApiClient,
     required this.pokemonDetailsApiClient,
+    required this.pokemonSpeciesApiClient,
   });
 
   final BasicPokemonApiClient basicPokemonApiClient;
   final PokemonDetailsApiClient pokemonDetailsApiClient;
+  final PokemonSpeciesApiClient pokemonSpeciesApiClient;
 
   @override
-  Future<List<BasicPokemon>> fetchBasicPokemons(int offset, int limit) async {
+  Future<List<BasicPokemon>> getBasicPokemons(int offset, int limit) async {
     List results = [];
     try {
       final response = await basicPokemonApiClient.fetchBasicPokemonData(
@@ -40,7 +44,7 @@ class PokemonRepositoryImpl implements PokemonRepository {
   }
 
   @override
-  Future<PokemonDetails> fetchPokemonDetails(String url) async {
+  Future<PokemonDetails> getPokemonDetails(String url) async {
     Map<String, dynamic> decodedJson = {};
 
     try {
@@ -53,5 +57,23 @@ class PokemonRepositoryImpl implements PokemonRepository {
     }
 
     return PokemonDetails.fromJson(decodedJson);
+  }
+
+  @override
+  Future<PokemonSpecies> getPokemonSpeciesInfo(String id) async {
+    Map<String, dynamic> decodedJson = {};
+
+    try {
+      final response = await pokemonSpeciesApiClient.fetchPokemonSpeciesInfo(
+        id,
+      );
+
+      final data = response.body;
+      decodedJson = jsonDecode(data);
+    } catch (e) {
+      print(e.toString());
+    }
+
+    return PokemonSpecies.fromJson(decodedJson);
   }
 }

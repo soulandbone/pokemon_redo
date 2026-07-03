@@ -8,5 +8,5 @@ final pokemonDetailProvider = FutureProvider.autoDispose
 
       ref.keepAlive();
 
-      return repository.fetchPokemonDetails(url);
+      return repository.getPokemonDetails(url);
     });

@@ -25,7 +25,7 @@ class BasicPokemonListNotifier extends Notifier<BasicPokemonListState> {
   Future<void> loadBasicPokemons(int offset, int limit) async {
     try {
       state = state.copyWith(isLoading: true);
-      final pokemonList = await _repository.fetchBasicPokemons(offset, limit);
+      final pokemonList = await _repository.getBasicPokemons(offset, limit);
 
       state = state.copyWith(isLoading: false, basicPokemonList: pokemonList);
     } catch (e) {

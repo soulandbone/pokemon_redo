@@ -9,6 +9,7 @@ import 'package:pokemon_redo/helpers/capitalizer.dart';
 import 'package:pokemon_redo/helpers/number_formatter.dart';
 import 'package:pokemon_redo/helpers/string_to_icon_mapper.dart';
 import 'package:pokemon_redo/presentation/widgets/image_gradient.dart';
+import 'package:pokemon_redo/presentation/widgets/pokemon_information.dart';
 
 class PokemonTile extends ConsumerWidget {
   const PokemonTile({required this.pokemon, super.key});
@@ -20,20 +21,28 @@ class PokemonTile extends ConsumerWidget {
     final details = ref.watch(pokemonDetailProvider(pokemon.url));
 
     return details.when(
-      data: (data) => _fullPokemonTile(data, pokemon),
+      data: (data) => _fullPokemonTile(data, pokemon, context),
       error: (e, _) => Center(child: Text("there was an error $e")),
       loading: () => Center(child: CircularProgressIndicator()),
     );
   }
 }
 
-Widget _fullPokemonTile(PokemonDetails details, BasicPokemon pokemon) {
+Widget _fullPokemonTile(
+  PokemonDetails details,
+  BasicPokemon pokemon,
+  BuildContext context,
+) {
   return GestureDetector(
     onTap: () {
-      // Navigator.of(context).push(MaterialPageRoute(
-      //     builder: (context) => PokemonInformation(
-      //           pokemonInfo: pokemon,
-      //         )));
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => PokemonInformation(
+            basicPokemon: pokemon,
+            pokemonDetails: details,
+          ),
+        ),
+      );
     },
     child: Container(
       decoration: BoxDecoration(
@@ -103,7 +112,7 @@ Widget _fullPokemonTile(PokemonDetails details, BasicPokemon pokemon) {
                   ), //AppMaps.typeIconMapLarge[pokemon.types[0]]!
                   Center(
                     child: Image.network(
-                      details.frontDefault,
+                      details.imageUrl,
                       errorBuilder: (context, error, stackTrace) {
                         return Opacity(
                           opacity: 0.2,
