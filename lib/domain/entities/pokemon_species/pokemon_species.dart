@@ -14,13 +14,17 @@ class PokemonSpecies {
     final genera = json['genera']; //genus is inside of genera entry
     final flavorTexts = json['flavor_text_entries'];
 
-    final genus = genera.firstWhere(
-      (element) => element['language']['name'] == 'en',
-    )['genus'];
+    final genus =
+        genera.firstWhere(
+              (element) => element['language']['name'] == 'en',
+            )['genus']
+            as String;
 
-    final description = flavorTexts.firstWhere(
-      (element) => element['language']['name'] = 'en',
-    )['flavor_text'];
+    final description =
+        flavorTexts.firstWhere(
+              (element) => element['language']['name'] == 'en',
+            )['flavor_text']
+            as String;
 
     return PokemonSpecies(
       genderRate: genderRate,
