@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:pokemon_redo/data/datasources/basic_pokemon_api_client.dart';
+import 'package:pokemon_redo/data/datasources/pokemon_damages_api_client.dart';
 import 'package:pokemon_redo/data/datasources/pokemon_details_api_client.dart';
 import 'package:pokemon_redo/data/datasources/pokemon_species_api_client.dart';
 import 'package:pokemon_redo/domain/entities/pokemon_details/pokemon_details.dart';
@@ -14,11 +15,13 @@ class PokemonRepositoryImpl implements PokemonRepository {
     required this.basicPokemonApiClient,
     required this.pokemonDetailsApiClient,
     required this.pokemonSpeciesApiClient,
+    required this.pokemonDamagesApiClient,
   });
 
   final BasicPokemonApiClient basicPokemonApiClient;
   final PokemonDetailsApiClient pokemonDetailsApiClient;
   final PokemonSpeciesApiClient pokemonSpeciesApiClient;
+  final PokemonDamagesApiClient pokemonDamagesApiClient;
 
   @override
   Future<List<BasicPokemon>> getBasicPokemons(int offset, int limit) async {
@@ -66,6 +69,24 @@ class PokemonRepositoryImpl implements PokemonRepository {
     try {
       final response = await pokemonSpeciesApiClient.fetchPokemonSpeciesInfo(
         id,
+      );
+
+      final data = response.body;
+      decodedJson = jsonDecode(data);
+    } catch (e) {
+      print(e.toString());
+    }
+
+    return PokemonSpecies.fromJson(decodedJson);
+  }
+
+  @override
+  Future<PokemonSpecies> getPokemonDamagesInfo(String type) async {
+    Map<String, dynamic> decodedJson = {};
+
+    try {
+      final response = await pokemonDamagesApiClient.fetchPokemonDamagesInfo(
+        type,
       );
 
       final data = response.body;

@@ -1,8 +1,6 @@
-import 'package:pokemon_redo/domain/entities/pokemon_damage_info/pokemon_damage_info.dart';
+import 'package:pokemon_redo/domain/entities/pokemon_damages/pokemon_damages.dart';
 
-List<String> calculateWeaknesses(
-  List<PokemonDamageInfo> pokemonDamageInfoList,
-) {
+List<String> calculateWeaknesses(List<PokemonDamages> pokemonDamageInfoList) {
   Set<String> doubleDamageFrom = {};
   Set<String> halfDamageFrom = {};
   Set<String> noDamageFrom = {};

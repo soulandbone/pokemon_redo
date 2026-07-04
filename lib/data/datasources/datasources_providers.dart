@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokemon_redo/data/datasources/basic_pokemon_api_client.dart';
+import 'package:pokemon_redo/data/datasources/pokemon_damages_api_client.dart';
 import 'package:pokemon_redo/data/datasources/pokemon_details_api_client.dart';
 import 'package:pokemon_redo/data/datasources/pokemon_species_api_client.dart';
 import 'package:pokemon_redo/data/network/network_providers.dart';
@@ -22,4 +23,11 @@ final pokemonSpeciesApiClientProvider = Provider<PokemonSpeciesApiClient>((
 ) {
   final appHttpClientInstance = ref.read(appHttpClientProvider);
   return PokemonSpeciesApiClientImpl(appHttpClientInstance);
+});
+
+final pokemonDamagesApiClientProvider = Provider<PokemonDamagesApiClient>((
+  ref,
+) {
+  final appHttpClientInstance = ref.read(appHttpClientProvider);
+  return PokemonDamagesApiClientImpl(appHttpClientInstance);
 });

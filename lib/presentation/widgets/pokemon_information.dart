@@ -8,11 +8,13 @@ import 'package:pokemon_redo/constants/app_strings.dart';
 import 'package:pokemon_redo/domain/entities/basic_pokemon/basic_pokemon.dart';
 import 'package:pokemon_redo/domain/entities/pokemon_details/pokemon_details.dart';
 import 'package:pokemon_redo/helpers/capitalizer.dart';
+import 'package:pokemon_redo/helpers/category_converter.dart';
 import 'package:pokemon_redo/helpers/description_formatter.dart';
 
 import 'package:pokemon_redo/helpers/number_formatter.dart';
 import 'package:pokemon_redo/helpers/string_to_icon_mapper.dart';
 import 'package:pokemon_redo/presentation/screens/details_error.dart';
+import 'package:pokemon_redo/presentation/widgets/colored_line.dart';
 
 import 'package:pokemon_redo/presentation/widgets/custom_top_background.dart';
 import 'package:pokemon_redo/presentation/widgets/image_gradient.dart';
@@ -170,13 +172,13 @@ class PokemonInformation extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    // Expanded(
-                    //   child: LabelValue(
-                    //     textLabel: AppStrings.kCategoria.toUpperCase(),
-                    //     icon: Icons.category_outlined,
-                    //     value: categoryConverter(speciesInfoData.genus),
-                    //   ),
-                    // ),
+                    Expanded(
+                      child: LabelValue(
+                        textLabel: AppStrings.kCategoria.toUpperCase(),
+                        icon: Icons.category_outlined,
+                        value: categoryConverter(speciesInfoData.genus),
+                      ),
+                    ),
                     Expanded(
                       child: LabelValue(
                         textLabel: AppStrings.kHabilidad.toUpperCase(),
@@ -189,14 +191,14 @@ class PokemonInformation extends ConsumerWidget {
                 SizedBox(height: 30),
                 Center(child: Text('GENERO')),
                 SizedBox(height: 30),
-                // Container(
-                //   margin: EdgeInsets.symmetric(horizontal: 5),
-                //   child: ColoredLine(
-                //     backgroundColor: Colors.red,
-                //     fillColor: Colors.blue,
-                //     genderRate: speciesInfoData.genderRate,
-                //   ),
-                // ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  child: ColoredLine(
+                    backgroundColor: Colors.red,
+                    fillColor: Colors.blue,
+                    genderRate: speciesInfoData.genderRate,
+                  ),
+                ),
                 SizedBox(height: 40),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10),
