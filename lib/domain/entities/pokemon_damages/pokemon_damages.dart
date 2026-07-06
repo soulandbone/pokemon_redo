@@ -11,11 +11,16 @@ class PokemonDamages {
 
   factory PokemonDamages.fromJson(Map<String, dynamic> json) {
     final doubleDamageFrom =
-        json['damage_relations']['double_damage_from'] as List<dynamic>;
+        (json['damage_relations']['double_damage_from'] as List)
+            .map((e) => e as Map<String, dynamic>)
+            .toList();
     final halfDamageFrom =
-        json['damage_relations']['half_damage_from'] as List<dynamic>;
-    final noDamageFrom =
-        json['damage_relations']['no_damage_from'] as List<dynamic>;
+        (json['damage_relations']['half_damage_from'] as List)
+            .map((e) => e as Map<String, dynamic>)
+            .toList();
+    final noDamageFrom = (json['damage_relations']['no_damage_from'] as List)
+        .map((e) => e as Map<String, dynamic>)
+        .toList();
 
     final listDoubleDamageFrom = doubleDamageFrom
         .map((e) => e['name'] as String)
