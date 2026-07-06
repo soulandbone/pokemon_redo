@@ -5,6 +5,7 @@ import 'package:pokemon_redo/data/datasources/basic_pokemon_api_client.dart';
 import 'package:pokemon_redo/data/datasources/pokemon_damages_api_client.dart';
 import 'package:pokemon_redo/data/datasources/pokemon_details_api_client.dart';
 import 'package:pokemon_redo/data/datasources/pokemon_species_api_client.dart';
+import 'package:pokemon_redo/domain/entities/pokemon_damages/pokemon_damages.dart';
 import 'package:pokemon_redo/domain/entities/pokemon_details/pokemon_details.dart';
 import 'package:pokemon_redo/domain/entities/pokemon_species/pokemon_species.dart';
 import 'package:pokemon_redo/domain/pokemon_repository.dart';
@@ -81,20 +82,27 @@ class PokemonRepositoryImpl implements PokemonRepository {
   }
 
   @override
-  Future<PokemonSpecies> getPokemonDamagesInfo(String type) async {
-    Map<String, dynamic> decodedJson = {};
+  Future<List<PokemonDamages>> getPokemonDamagesInfo(List<String> types) async {
+    List<Map<String, dynamic>> decodedJsonList = [];
+    List<PokemonDamages> results = [];
 
     try {
-      final response = await pokemonDamagesApiClient.fetchPokemonDamagesInfo(
-        type,
-      );
-
-      final data = response.body;
-      decodedJson = jsonDecode(data);
+      for (var type in types) {
+        final response = await pokemonDamagesApiClient.fetchPokemonDamagesInfo(
+          type,
+        );
+        final data = response.body;
+        decodedJsonList.add(jsonDecode(data));
+      }
     } catch (e) {
       print(e.toString());
     }
 
-    return PokemonSpecies.fromJson(decodedJson);
+    for (var type in decodedJsonList) {
+      //almost certain that it has to be outside of the try
+      results.add(PokemonDamages.fromJson(type));
+    }
+
+    return results;
   }
 }

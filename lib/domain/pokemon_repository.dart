@@ -7,5 +7,5 @@ abstract class PokemonRepository {
   Future<List<BasicPokemon>> getBasicPokemons(int offset, int limit);
   Future<PokemonDetails> getPokemonDetails(String url);
   Future<PokemonSpecies> getPokemonSpeciesInfo(String id);
-  Future<PokemonDamages> getPokemonDamagesInfo(String type);
+  Future<List<PokemonDamages>> getPokemonDamagesInfo(List<String> types);
 }
