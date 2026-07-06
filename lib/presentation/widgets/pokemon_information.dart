@@ -8,6 +8,7 @@ import 'package:pokemon_redo/constants/app_strings.dart';
 
 import 'package:pokemon_redo/domain/entities/basic_pokemon/basic_pokemon.dart';
 import 'package:pokemon_redo/domain/entities/pokemon_details/pokemon_details.dart';
+import 'package:pokemon_redo/helpers/calculate_weaknesses.dart';
 import 'package:pokemon_redo/helpers/capitalizer.dart';
 import 'package:pokemon_redo/helpers/category_converter.dart';
 import 'package:pokemon_redo/helpers/description_formatter.dart';
@@ -19,6 +20,7 @@ import 'package:pokemon_redo/presentation/widgets/colored_line.dart';
 import 'package:pokemon_redo/presentation/widgets/custom_top_background.dart';
 import 'package:pokemon_redo/presentation/widgets/image_gradient.dart';
 import 'package:pokemon_redo/presentation/widgets/label_value.dart';
+import 'package:pokemon_redo/presentation/widgets/weaknesses_grid.dart';
 
 class PokemonInformation extends ConsumerWidget {
   const PokemonInformation({
@@ -37,7 +39,6 @@ class PokemonInformation extends ConsumerWidget {
     final speciesInfo = ref.watch(
       pokemonSpeciesProvider(basicPokemon.id.toString()),
     );
-
     final damagesInfo = ref.watch(pokemonDamagesProvider(pokemonDetails.types));
 
     return Scaffold(
@@ -211,7 +212,7 @@ class PokemonInformation extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    //WeaknessesGrid(types: calculateWeaknesses(typeInfoData)),
+                    WeaknessesGrid(types: calculateWeaknesses(damagesInfoData)),
                     SizedBox(height: 100),
                   ],
                 ),
@@ -221,15 +222,10 @@ class PokemonInformation extends ConsumerWidget {
             loading: () => Center(child: CircularProgressIndicator()),
           );
         },
-        error: (err, stack) => Center(child: Text('${err.toString()}+ $stack')),
+        error: (err, stack) =>
+            Center(child: Text('${err.toString()}+ ${stack.toString()} ')),
         loading: () => Center(child: CircularProgressIndicator()),
       ),
     );
-    //   },
-    // error: (err, stack) => DetailsError(),
-    // loading: () => Center(child: CircularProgressIndicator()),
   }
-
-  // loading: () => Center(child: CircularProgressIndicator()),
-  // error: (err, stack) => DetailsError(),
 }
