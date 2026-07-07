@@ -38,6 +38,7 @@ class PokemonInformation extends ConsumerWidget {
     double marginHorizontal = 10;
 
     final state = ref.watch(basicPokemonListNotifierProvider);
+    final isFav = state.favoritePokemonSet.contains(basicPokemon.id);
 
     final speciesInfo = ref.watch(
       pokemonSpeciesProvider(basicPokemon.id.toString()),
@@ -101,11 +102,11 @@ class PokemonInformation extends ConsumerWidget {
                               },
                               child: Icon(
                                 size: 40,
-                                Icons.favorite_border_outlined,
-                                //isFav
-                                //    ? Icons.favorite
-                                //  : Icons.favorite_border_outlined,
-                                // color: isFav ? Colors.red : Colors.white,
+
+                                isFav
+                                    ? Icons.favorite
+                                    : Icons.favorite_border_outlined,
+                                color: isFav ? Colors.red : Colors.white,
                               ),
                             ),
                           ),
