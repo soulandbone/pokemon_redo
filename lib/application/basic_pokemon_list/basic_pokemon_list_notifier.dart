@@ -13,6 +13,7 @@ class BasicPokemonListNotifier extends Notifier<BasicPokemonListState> {
 
     return BasicPokemonListState(
       basicPokemonList: [],
+      favoritePokemonSet: {},
       isLoading: false,
       isLoadingMore: false,
       hasMore: true,
@@ -33,6 +34,21 @@ class BasicPokemonListNotifier extends Notifier<BasicPokemonListState> {
         isLoading: false,
         errorMessage: "There was a problem loading the pokemons",
       );
+    }
+  }
+
+  void toggleFavoritePokemon(int pokemonId) {
+    var isFavorited = state.favoritePokemonSet.contains(pokemonId);
+    if (isFavorited) {
+      var newSet = state.favoritePokemonSet
+          .where((element) => element != pokemonId)
+          .toSet();
+      var newState = state.copyWith(favoritePokemonSet: newSet);
+      state = newState;
+    } else {
+      var newSet = {...state.favoritePokemonSet, pokemonId};
+      var newState = state.copyWith(favoritePokemonSet: newSet);
+      state = newState;
     }
   }
 }

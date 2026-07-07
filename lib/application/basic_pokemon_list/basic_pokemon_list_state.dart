@@ -3,6 +3,7 @@ import 'package:pokemon_redo/domain/entities/basic_pokemon/basic_pokemon.dart';
 class BasicPokemonListState {
   const BasicPokemonListState({
     required this.basicPokemonList,
+    required this.favoritePokemonSet,
     required this.isLoading,
     required this.isLoadingMore,
     required this.hasMore,
@@ -13,6 +14,7 @@ class BasicPokemonListState {
   });
 
   final List<BasicPokemon> basicPokemonList;
+  final Set<int> favoritePokemonSet;
   final bool isLoading;
   final bool isLoadingMore;
   final bool hasMore;
@@ -23,6 +25,7 @@ class BasicPokemonListState {
 
   BasicPokemonListState copyWith({
     List<BasicPokemon>? basicPokemonList,
+    Set<int>? favoritePokemonSet,
     bool? isLoading,
     bool? isLoadingMore,
     bool? hasMore,
@@ -33,6 +36,7 @@ class BasicPokemonListState {
   }) {
     return BasicPokemonListState(
       basicPokemonList: basicPokemonList ?? this.basicPokemonList,
+      favoritePokemonSet: favoritePokemonSet ?? this.favoritePokemonSet,
       isLoading: isLoading ?? this.isLoading,
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
       hasMore: hasMore ?? this.hasMore,

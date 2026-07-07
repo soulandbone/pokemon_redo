@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokemon_redo/application/basic_pokemon_list/basic_pokemon_list_provider.dart';
 import 'package:pokemon_redo/application/pokemon_damages/pokemon_damages_provider.dart';
 import 'package:pokemon_redo/application/pokemon_species/pokemon_species_provider.dart';
 import 'package:pokemon_redo/constants/app_maps.dart';
@@ -35,6 +36,8 @@ class PokemonInformation extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double marginHorizontal = 10;
+
+    final state = ref.watch(basicPokemonListNotifierProvider);
 
     final speciesInfo = ref.watch(
       pokemonSpeciesProvider(basicPokemon.id.toString()),
@@ -90,9 +93,11 @@ class PokemonInformation extends ConsumerWidget {
                             top: 30,
                             child: GestureDetector(
                               onTap: () {
-                                // ref
-                                //     .read(favoritesProvider.notifier)
-                                //     .toggle(pokemonInfo.id);
+                                ref
+                                    .read(
+                                      basicPokemonListNotifierProvider.notifier,
+                                    )
+                                    .toggleFavoritePokemon(basicPokemon.id);
                               },
                               child: Icon(
                                 size: 40,

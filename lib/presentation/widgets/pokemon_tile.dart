@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pokemon_redo/application/basic_pokemon_list/basic_pokemon_list_provider.dart';
 import 'package:pokemon_redo/application/pokemon_detail/pokemon_detail_provider.dart';
 import 'package:pokemon_redo/constants/app_colors.dart';
 import 'package:pokemon_redo/constants/app_maps.dart';
@@ -18,10 +19,14 @@ class PokemonTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var isFav = ref
+        .watch(basicPokemonListNotifierProvider)
+        .favoritePokemonSet
+        .contains(pokemon.id);
     final details = ref.watch(pokemonDetailProvider(pokemon.url));
 
     return details.when(
-      data: (data) => _fullPokemonTile(data, pokemon, context),
+      data: (data) => _fullPokemonTile(data, pokemon, context, ref, isFav),
       error: (e, _) => Center(child: Text("there was an error $e")),
       loading: () => Center(child: CircularProgressIndicator()),
     );
@@ -32,6 +37,8 @@ Widget _fullPokemonTile(
   PokemonDetails details,
   BasicPokemon pokemon,
   BuildContext context,
+  WidgetRef ref,
+  bool isFav,
 ) {
   return GestureDetector(
     onTap: () {
@@ -126,9 +133,9 @@ Widget _fullPokemonTile(
                     top: 10,
                     child: GestureDetector(
                       onTap: () {
-                        // ref
-                        //     .read(favoritesProvider.notifier)
-                        //     .toggle(pokemon.id);
+                        ref
+                            .read(basicPokemonListNotifierProvider.notifier)
+                            .toggleFavoritePokemon(pokemon.id);
                       },
                       child: CircleAvatar(
                         radius: 18,
@@ -137,13 +144,14 @@ Widget _fullPokemonTile(
                           radius: 16, // Adjust the radius as needed
                           backgroundColor: AppColors
                               .kLikeCircleBackground, // Background color of the circle
-                          // child: Icon(
-                          //   size: 20,
-                          //   isFav
-                          //       ? Icons.favorite
-                          //       : Icons.favorite_border_outlined,
-                          //   color: isFav ? Colors.red : Colors.white,
-                          // ),
+                          child: Icon(
+                            size: 20,
+
+                            isFav
+                                ? Icons.favorite
+                                : Icons.favorite_border_outlined,
+                            color: isFav ? Colors.red : Colors.white,
+                          ),
                         ),
                       ),
                     ),
