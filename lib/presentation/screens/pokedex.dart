@@ -14,11 +14,14 @@ class _PokedexState extends ConsumerState<Pokedex> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => ref
-          .read(basicPokemonListNotifierProvider.notifier)
-          .loadBasicPokemons(0, 20),
-    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!ref.read(basicPokemonListNotifierProvider).initLoadDone) {
+        ref
+            .read(basicPokemonListNotifierProvider.notifier)
+            .loadBasicPokemons(0, 20);
+      }
+    });
   }
 
   @override

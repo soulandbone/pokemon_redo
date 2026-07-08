@@ -6,7 +6,7 @@ class BasicPokemonListState {
     required this.favoritePokemonSet,
     required this.isLoading,
     required this.isLoadingMore,
-    required this.hasMore,
+    required this.initLoadDone,
     required this.offset,
     required this.limit,
     required this.stringQuery,
@@ -17,7 +17,7 @@ class BasicPokemonListState {
   final Set<int> favoritePokemonSet;
   final bool isLoading;
   final bool isLoadingMore;
-  final bool hasMore;
+  final bool initLoadDone;
   final int offset;
   final int limit;
   final String stringQuery;
@@ -28,7 +28,7 @@ class BasicPokemonListState {
     Set<int>? favoritePokemonSet,
     bool? isLoading,
     bool? isLoadingMore,
-    bool? hasMore,
+    bool? initLoadDone,
     int? offset,
     int? limit,
     String? stringQuery,
@@ -39,7 +39,7 @@ class BasicPokemonListState {
       favoritePokemonSet: favoritePokemonSet ?? this.favoritePokemonSet,
       isLoading: isLoading ?? this.isLoading,
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
-      hasMore: hasMore ?? this.hasMore,
+      initLoadDone: initLoadDone ?? this.initLoadDone,
       offset: offset ?? this.offset,
       limit: limit ?? this.limit,
       stringQuery: stringQuery ?? this.stringQuery,

@@ -11,12 +11,14 @@ class BasicPokemonListNotifier extends Notifier<BasicPokemonListState> {
   BasicPokemonListState build() {
     _repository = ref.read(pokemonRepositoryProvider);
 
+    ref.keepAlive();
+
     return BasicPokemonListState(
       basicPokemonList: [],
       favoritePokemonSet: {},
       isLoading: false,
       isLoadingMore: false,
-      hasMore: true,
+      initLoadDone: false,
       offset: 0,
       limit: 20,
       stringQuery: '',
@@ -28,7 +30,11 @@ class BasicPokemonListNotifier extends Notifier<BasicPokemonListState> {
       state = state.copyWith(isLoading: true);
       final pokemonList = await _repository.getBasicPokemons(offset, limit);
 
-      state = state.copyWith(isLoading: false, basicPokemonList: pokemonList);
+      state = state.copyWith(
+        isLoading: false,
+        initLoadDone: true,
+        basicPokemonList: pokemonList,
+      );
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
