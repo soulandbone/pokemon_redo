@@ -30,10 +30,38 @@ class BasicPokemonListNotifier extends Notifier<BasicPokemonListState> {
       state = state.copyWith(isLoading: true);
       final pokemonList = await _repository.getBasicPokemons(offset, limit);
 
-      state = state.copyWith(
+      var newState = state.copyWith(
+        offset: offset += state.limit,
         isLoading: false,
         initLoadDone: true,
         basicPokemonList: pokemonList,
+      );
+
+      state = newState;
+      print(
+        'state now for offset is ${state.offset} and limit is ${state.limit}',
+      );
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: "There was a problem loading the pokemons",
+      );
+    }
+  }
+
+  Future<void> loadMorePokemons({
+    required int offset,
+    required int limit,
+  }) async {
+    try {
+      state = state.copyWith(isLoadingMore: true);
+      final newPokemonList = await _repository.getBasicPokemons(offset, limit);
+
+      state = state.copyWith(
+        basicPokemonList: [...state.basicPokemonList, ...newPokemonList],
+        isLoadingMore: false,
+
+        offset: offset += state.limit,
       );
     } catch (e) {
       state = state.copyWith(
