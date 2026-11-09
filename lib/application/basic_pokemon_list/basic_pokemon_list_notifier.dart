@@ -25,49 +25,52 @@ class BasicPokemonListNotifier extends Notifier<BasicPokemonListState> {
     );
   }
 
-  Future<void> loadBasicPokemons(int offset, int limit) async {
+  Future<void> loadBasicPokemons() async {
     try {
       state = state.copyWith(isLoading: true);
-      final pokemonList = await _repository.getBasicPokemons(offset, limit);
 
-      var newState = state.copyWith(
-        offset: offset += state.limit,
-        isLoading: false,
+      final pokemonList = await _repository.getBasicPokemons(
+        state.offset,
+        state.limit,
+      );
+
+      var newOffset = state.offset + state.limit;
+      state = state.copyWith(
+        offset: newOffset,
         initLoadDone: true,
         basicPokemonList: pokemonList,
       );
-
-      state = newState;
-      print(
-        'state now for offset is ${state.offset} and limit is ${state.limit}',
-      );
     } catch (e) {
       state = state.copyWith(
-        isLoading: false,
         errorMessage: "There was a problem loading the pokemons",
       );
+    } finally {
+      state = state.copyWith(isLoading: false);
     }
   }
 
-  Future<void> loadMorePokemons({
-    required int offset,
-    required int limit,
-  }) async {
+  Future<void> loadMorePokemons() async {
+    if (state.isLoadingMore) return;
     try {
       state = state.copyWith(isLoadingMore: true);
-      final newPokemonList = await _repository.getBasicPokemons(offset, limit);
 
+      final newPokemonList = await _repository.getBasicPokemons(
+        state.offset,
+        state.limit,
+      );
+
+      var nextOffset = state.offset + state.limit;
       state = state.copyWith(
         basicPokemonList: [...state.basicPokemonList, ...newPokemonList],
-        isLoadingMore: false,
 
-        offset: offset += state.limit,
+        offset: nextOffset,
       );
     } catch (e) {
       state = state.copyWith(
-        isLoading: false,
         errorMessage: "There was a problem loading the pokemons",
       );
+    } finally {
+      state = state.copyWith(isLoadingMore: false);
     }
   }
 

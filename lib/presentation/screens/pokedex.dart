@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pokemon_redo/application/basic_pokemon_list/basic_pokemon_list_notifier.dart';
+
 import 'package:pokemon_redo/application/basic_pokemon_list/basic_pokemon_list_provider.dart';
-import 'package:pokemon_redo/application/basic_pokemon_list/basic_pokemon_list_state.dart';
 import 'package:pokemon_redo/presentation/widgets/pokemon_tile.dart';
 
 class Pokedex extends ConsumerStatefulWidget {
@@ -23,12 +22,7 @@ class _PokedexState extends ConsumerState<Pokedex> {
       ref.read(basicPokemonListNotifierProvider);
 
       if (!ref.read(basicPokemonListNotifierProvider).initLoadDone) {
-        ref
-            .read(basicPokemonListNotifierProvider.notifier)
-            .loadBasicPokemons(
-              ref.read(basicPokemonListNotifierProvider).offset,
-              ref.read(basicPokemonListNotifierProvider).limit,
-            );
+        ref.read(basicPokemonListNotifierProvider.notifier).loadBasicPokemons();
       }
       _scrollController.addListener(_onScroll);
     });
@@ -41,22 +35,10 @@ class _PokedexState extends ConsumerState<Pokedex> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels ==
+    if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent) {
-      print(
-        'Inside of _onScrol, offset is ${ref.read(basicPokemonListNotifierProvider).offset} and limit is ${ref.read(basicPokemonListNotifierProvider).limit}',
-      );
       if (!ref.read(basicPokemonListNotifierProvider).isLoadingMore) {
-        ref
-            .read(basicPokemonListNotifierProvider.notifier)
-            .loadMorePokemons(
-              offset: ref.read(basicPokemonListNotifierProvider).offset,
-              limit: ref.read(basicPokemonListNotifierProvider).limit,
-            );
-
-        var state = ref.read(basicPokemonListNotifierProvider);
-        var newState = state.copyWith(isLoadingMore: false);
-        state = newState;
+        ref.read(basicPokemonListNotifierProvider.notifier).loadMorePokemons();
       }
     }
   }
