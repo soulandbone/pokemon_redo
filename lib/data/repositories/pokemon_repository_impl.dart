@@ -28,12 +28,11 @@ class PokemonRepositoryImpl implements PokemonRepository {
   Future<List<BasicPokemon>> getBasicPokemons(int offset, int limit) async {
     List results = [];
     try {
-      final response = await basicPokemonApiClient.fetchBasicPokemonData(
+      final data = await basicPokemonApiClient.fetchBasicPokemonData(
         offset: offset,
         limit: limit,
       );
 
-      final data = response.body;
       final decodedJson = jsonDecode(data) as Map<String, dynamic>;
 
       results = decodedJson['results'] as List<dynamic>;
@@ -52,9 +51,8 @@ class PokemonRepositoryImpl implements PokemonRepository {
     Map<String, dynamic> decodedJson = {};
 
     try {
-      final response = await pokemonDetailsApiClient.fetchPokemonDetails(url);
+      final data = await pokemonDetailsApiClient.fetchPokemonDetails(url);
 
-      final data = response.body;
       decodedJson = jsonDecode(data);
     } catch (e) {
       print(e.toString());
@@ -68,11 +66,8 @@ class PokemonRepositoryImpl implements PokemonRepository {
     Map<String, dynamic> decodedJson = {};
 
     try {
-      final response = await pokemonSpeciesApiClient.fetchPokemonSpeciesInfo(
-        id,
-      );
+      final data = await pokemonSpeciesApiClient.fetchPokemonSpeciesInfo(id);
 
-      final data = response.body;
       decodedJson = jsonDecode(data);
     } catch (e) {
       print(e.toString());
@@ -88,10 +83,10 @@ class PokemonRepositoryImpl implements PokemonRepository {
 
     try {
       for (var type in types) {
-        final response = await pokemonDamagesApiClient.fetchPokemonDamagesInfo(
+        final data = await pokemonDamagesApiClient.fetchPokemonDamagesInfo(
           type,
         );
-        final data = response.body;
+
         decodedJsonList.add(jsonDecode(data));
       }
     } catch (e) {

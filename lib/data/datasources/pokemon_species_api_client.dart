@@ -5,7 +5,7 @@ abstract class PokemonSpeciesApiClient {
 
   final AppHttpClient appHttpClient;
 
-  Future<HttpResponse<String>> fetchPokemonSpeciesInfo(String id);
+  Future<String> fetchPokemonSpeciesInfo(String id);
 }
 
 class PokemonSpeciesApiClientImpl implements PokemonSpeciesApiClient {
@@ -14,9 +14,9 @@ class PokemonSpeciesApiClientImpl implements PokemonSpeciesApiClient {
   final AppHttpClient appHttpClient;
 
   @override
-  Future<HttpResponse<String>> fetchPokemonSpeciesInfo(String id) async {
+  Future<String> fetchPokemonSpeciesInfo(String id) async {
     final uri = Uri.parse('https://pokeapi.co/api/v2/pokemon-species/$id');
 
-    return appHttpClient.getRaw(uri);
+    return appHttpClient.get(uri);
   }
 }

@@ -5,7 +5,7 @@ abstract class BasicPokemonApiClient {
 
   final AppHttpClient appHttpClient;
 
-  Future<HttpResponse<String>> fetchBasicPokemonData({
+  Future<String> fetchBasicPokemonData({
     required int offset,
     required int limit,
   });
@@ -17,7 +17,7 @@ class BasicPokemonApiClientImpl implements BasicPokemonApiClient {
   final AppHttpClient appHttpClient;
 
   @override
-  Future<HttpResponse<String>> fetchBasicPokemonData({
+  Future<String> fetchBasicPokemonData({
     required int offset,
     required int limit,
   }) async {
@@ -25,6 +25,6 @@ class BasicPokemonApiClientImpl implements BasicPokemonApiClient {
       'https://pokeapi.co/api/v2/pokemon?offset=$offset&limit=$limit',
     );
 
-    return appHttpClient.getRaw(uri);
+    return appHttpClient.get(uri);
   }
 }
